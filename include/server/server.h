@@ -8,22 +8,23 @@
 #include <QString>
 #include <QtNetwork/QTcpServer>
 
-/// @brief TCP Server implementation.
-class Server final : public QObject
-{
-private:
+/**
+ * TCP Server implementation.
+ */
+class Server final : public QObject {
     Q_OBJECT
 
     QTcpServer* server_{};
     QSet<Connection*> connections_{};
 
 public:
-    /// @brief Constructor.
-    /// @param parent Pointer to the parent object initialization.
+    /**
+     * Constructor.
+     * @param parent Pointer to the parent object initialization.
+     */
     explicit Server(QObject* parent = nullptr);
 
     bool startListening(const std::uint16_t& port);
-
     void sendMessage(const QString& message);
 
 private slots:

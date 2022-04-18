@@ -6,29 +6,30 @@
 
 #include <QMainWindow>
 
-namespace Ui
-{
-    class SendReceiveManager;
-}
+namespace Ui { class SendReceiveManager; }
 
-/// @brief Manager for sending and receiving messages from client to server and vice versa.
-class SendReceiveManager final : public QMainWindow
-{
-private:
+/**
+ * Manager for sending and receiving messages from client to server and vice versa.
+ */
+class SendReceiveManager final : public QMainWindow {
     Q_OBJECT
 
-    /// @brief Member object of graphical interface class.
-    std::shared_ptr<Ui::SendReceiveManager> ui_{};
+    /**
+     * Member object of graphical interface class.
+     */
+    Ui::SendReceiveManager* ui_{};
 
     Server* server_{};
     Client* client1_{};
     Client* client2_{};
 
 public:
-    /// @brief Constructor.
-    /// @param parent Pointer to the parent object initialization.
+    /**
+     * Constructor.
+     * @param parent Pointer to the parent object initialization.
+     */
     explicit SendReceiveManager(QWidget* parent = nullptr);
-    ~SendReceiveManager() override = default;
+    ~SendReceiveManager() override;
 
 private slots:
     void on_serverLineEdit_returnPressed();

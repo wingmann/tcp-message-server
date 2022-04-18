@@ -1,7 +1,9 @@
 #include "send_receive_manager.h"
-#include "ui_send_receive_manager.h"
+#include "./ui_send_receive_manager.h"
 
-SendReceiveManager::SendReceiveManager(QWidget* parent) : QMainWindow{parent}, ui_{new Ui::SendReceiveManager}
+SendReceiveManager::SendReceiveManager(QWidget* parent)
+    : QMainWindow{parent},
+      ui_{new Ui::SendReceiveManager}
 {
     const char address[]{"localhost"};
     const std::uint16_t port{8080};
@@ -9,17 +11,28 @@ SendReceiveManager::SendReceiveManager(QWidget* parent) : QMainWindow{parent}, u
     ui_->setupUi(this);
 
     server_ = new Server{this};
-    ui_->serverListWidget->addItem(server_->startListening(port) ? "Server started." : "Server failed to start.");
+    ui_->serverListWidget->addItem(server_->startListening(port)
+        ? "Server started."
+        : "Server failed to start.");
 
     client1_ = new Client{this};
-    ui_->clientListWidget1->addItem(client1_->connectTo(address, port) ? "Connected." : "Failed to connect.");
+    ui_->clientListWidget1->addItem(client1_->connectTo(address, port)
+        ? "Connected."
+        : "Failed to connect.");
 
     client2_ = new Client{this};
-    ui_->clientListWidget2->addItem(client2_->connectTo(address, port) ? "Connected." : "Failed to connect.");
+    ui_->clientListWidget2->addItem(client2_->connectTo(address, port)
+        ? "Connected."
+        : "Failed to connect.");
 
     connect(server_, &Server::messageReceived, this, &SendReceiveManager::onServerMessageReceived);
     connect(client1_, &Client::messageReceived, this, &SendReceiveManager::onClient1MessageReceived);
     connect(client2_, &Client::messageReceived, this, &SendReceiveManager::onClient2MessageReceived);
+}
+
+SendReceiveManager::~SendReceiveManager()
+{
+    delete ui_;
 }
 
 void SendReceiveManager::on_serverLineEdit_returnPressed()

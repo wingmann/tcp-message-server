@@ -6,7 +6,10 @@ Connection::Connection(QObject* parent) : QObject{parent}, socket_{new QTcpSocke
     connect(socket_, &QTcpSocket::disconnected, this, &Connection::onDisconnected);
 }
 
-Connection::Connection(QObject* parent, QTcpSocket* socket) : QObject{parent}, socket_{socket}, isValid_{true}
+Connection::Connection(QObject* parent, QTcpSocket* socket)
+    : QObject{parent},
+      socket_{socket},
+      isValid_{true}
 {
     connect(socket_, &QTcpSocket::readyRead, this, &Connection::onReadyRead);
     connect(socket_, &QTcpSocket::disconnected, this, &Connection::onDisconnected);
@@ -50,10 +53,10 @@ void Connection::onReadyRead()
     receive.setVersion(QDataStream::Qt_DefaultCompiledVersion);
 
     // On first call: only read the block size.
-    if (!blockSize_)
-    {
+    if (!blockSize_) {
         if (socket_->bytesAvailable() < sizeof(std::uint16_t))
             return;
+
         receive >> blockSize_;
     }
 

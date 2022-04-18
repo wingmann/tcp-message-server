@@ -5,8 +5,7 @@
 #include <QString>
 #include <QtNetwork/QTcpSocket>
 
-class Connection : public QObject
-{
+class Connection : public QObject {
 private:
     Q_OBJECT
 
@@ -15,19 +14,21 @@ private:
     bool isValid_{};
 
 public:
-    /// @brief Constructor for client usage.
-    /// @param parent
+    /**
+     * @brief Constructor for client usage.
+     * @param parent
+     */
     explicit Connection(QObject* parent = nullptr);
 
-    /// @brief Constructor for server usage.
-    /// @param parent
-    /// @param socket
+    /**
+     * @brief Constructor for server usage.
+     * @param parent
+     * @param socket
+     */
     Connection(QObject* parent, QTcpSocket* socket);
 
     [[nodiscard]] const bool& isValid() const;
-
     void sendMessage(const QString& message);
-
     bool connectTo(const QString& host, std::uint16_t port);
 
 private slots:

@@ -33,7 +33,7 @@
 
 
 # Folders
-.idea
-.vs
 build/
 out/
+.idea/
+.vs/
